@@ -5,13 +5,13 @@ const startQuizCon = document.getElementById("startQuizContainer");
 const quizContent = document.getElementById("quizContentContainer");
 
 
-let quizDiv = document.createElement("form");
-quizDiv.className = "quiz-form";
+
+
 
 
 let score = 0;
 let currentQuestionIndex = 0;    
-
+let timer = 60000;
 
 const quiz = [
     {
@@ -32,6 +32,8 @@ const quiz = [
 ]
 
 const quizStart = function(quiz){
+    let quizDiv = document.createElement("form");
+    quizDiv.className = "quiz-form";
     quizDiv.innerHTML = `<div id="quiz-container">
                             <h3>${quiz.question}</h3>
                             <div>
@@ -48,12 +50,14 @@ const quizStart = function(quiz){
                         </div>`;
 
     quizContent.appendChild(quizDiv);
-    quizDiv.addEventListener("submit", quizSubmitHandler);
+    quizDiv.addEventListener("submit", function(e){
+        quizSubmitHandler(e, quizDiv);
+    });
     currentQuestionIndex++;
     console.log(currentQuestionIndex);
 }
 
-const quizSubmitHandler = function(event){
+const quizSubmitHandler = function(event, quizDiv ){
     event.preventDefault();
     const selected = document.querySelector(`input[name='answer']:checked`).value;
     console.log(selected);
