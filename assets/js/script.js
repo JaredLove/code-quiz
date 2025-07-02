@@ -8,10 +8,16 @@ const quizContent = document.getElementById("quizContentContainer");
 
 
 
-
+    //score and question index
 let score = 0;
 let currentQuestionIndex = 0;
+let quizDiv;
 
+    //timer variables
+let timeLeft = 5;
+let intervalId;
+
+    // array of question objects with choices and answer
 const quiz = [
     {
         question: "Inside which HTML element do we put the JavaScript file?",
@@ -30,8 +36,9 @@ const quiz = [
     }
 ]
 
+
 const quizStart = function(quiz){
-    let quizDiv = document.createElement("form");
+    quizDiv = document.createElement("form");
     quizDiv.className = "quiz-form";
     quizDiv.setAttribute("autocomplete", "off");
     quizDiv.innerHTML = `<div id="quiz-container">
@@ -59,7 +66,7 @@ const quizStart = function(quiz){
     quizContent.appendChild(quizDiv);
 }
 
-const quizSubmitHandler = function(event, quizDiv ){
+const quizSubmitHandler = function(event, quizDiv){
     if(event){
         event.preventDefault();
     }
@@ -79,6 +86,7 @@ const quizSubmitHandler = function(event, quizDiv ){
         quizDiv.remove();
         currentQuestionIndex++;
         if(currentQuestionIndex >= quiz.length){
+            clearInterval(intervalId);
             final(event);
         }else{
             quizStart(quiz[currentQuestionIndex]);
@@ -89,6 +97,7 @@ const quizSubmitHandler = function(event, quizDiv ){
 }
 
 const final = function(event){
+    clearInterval(intervalId);
     if(event){
         event.preventDefault();
     }
@@ -102,10 +111,30 @@ const final = function(event){
     }
 }
 
+
+const startTimer = function(){
+            //timer
+    const timer = document.getElementById("time");
+    timeLeft = 5;
+    timer.innerHTML = `Time left: ${timeLeft}s`;
+    clearInterval(intervalId);
+    intervalId = setInterval(() => {
+        timeLeft--;
+        timer.innerHTML = `Time left: ${timeLeft}s`;
+
+        if(timeLeft <= 0){
+        clearInterval(intervalId);
+        quizDiv.remove();
+        final();
+    }
+    }, 1000)
+}
 const startQuiz = function(){
+        clearInterval(intervalId);
         startQuizCon.setAttribute("class", "disabled");
         currentQuestionIndex = 0;
         score = 0;
+        startTimer();
         quizStart(quiz[currentQuestionIndex]);
 
 }
