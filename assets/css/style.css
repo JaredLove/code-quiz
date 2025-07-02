@@ -1,3 +1,6 @@
+body{
+    background: url("../images/gradientb.jpg");
+}
 main{
     display: flex;
     justify-content: center;
@@ -16,8 +19,12 @@ main{
     align-items: center;
 }
 
+.startQuizContainer h1 {
+    font-size: 40px;
+}
+
 .startQuizContainer p{
-    font-size: 22px;
+    font-size: 40px;
     font-weight: bold;
     width: 60ch;
 }
@@ -28,5 +35,14 @@ main{
     border: none;
     background-color: blueviolet;
     color: white;
+    font-size: 15px;
+    width: 100px;
+}
+
+.quizContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
 }
 
