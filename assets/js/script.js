@@ -14,7 +14,7 @@ let currentQuestionIndex = 0;
 let quizDiv;
 
     //timer variables
-let timeLeft = 5;
+let timeLeft = 20;
 let intervalId;
 
     // array of question objects with choices and answer
@@ -101,7 +101,8 @@ const final = function(event){
     if(event){
         event.preventDefault();
     }
-    alert(score);
+    alert(`You score was: ${score}`);
+    highScore();
     let playAgain = confirm("Would you like to play again?");
     if(playAgain){
         startQuiz();
@@ -111,11 +112,24 @@ const final = function(event){
     }
 }
 
+const highScore = function(){
+    const storedHighScore = localStorage.getItem("highscore");
+    const storedHighName = localStorage.getItem("highscoreName");
+    if(score > storedHighScore ){
+        alert("You beat the highscore!");
+        let name = prompt("What is your name?");
+        localStorage.setItem("highscore", score);
+        localStorage.setItem("highscoreName", name);
+    }else{
+        alert(`You did not beat the highscore of ${storedHighScore} set by ${storedHighName}!`)
+    }
+}
+
 
 const startTimer = function(){
             //timer
     const timer = document.getElementById("time");
-    timeLeft = 5;
+    timeLeft = 20;
     timer.innerHTML = `Time left: ${timeLeft}s`;
     clearInterval(intervalId);
     intervalId = setInterval(() => {
